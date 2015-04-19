@@ -35,6 +35,7 @@ Qué es Docker
 
 * Es una plataforma para desarrollar, desplegar y ejecutar aplicaciones
   distribuidas.
+
 * Según `451 Research`_: *"Es una herramienta que puede empaquetar una
   aplicación y sus depedencias en un contenedor virtual que puede ejecutarse en
   cualquier servidor Linux."*
@@ -70,15 +71,41 @@ Por qué Docker
 Por qué Docker
 ==============
 
-* Hay una comunidad que comparte artefactos.
+* Hay una comunidad que comparte sus artefactos.
 
 .. image:: _static/community.png
 
 Cómo está compuesto
 ===================
 
+Arquitectura
+------------
+
 * Motor: un contenedor de virtualización para el ambiente de las aplicaciones.
 * Hub: un servicio para compartir y administrar las imágenes. 
+
+Cómo está compuesto
+===================
+
+Imágenes
+--------
+
+Ejemplo de Dockerfile:
+
+.. code-block:: text
+
+   FROM ubuntu:14.10
+   MAINTAINER Ariel Gerardo Ríos
+   RUN apt-get install htop
+
+   ADD . /code
+   WORKDIR /code
+
+   EXPOSE 80
+
+   RUN echo "Hello world!"
+
+
 
 Cómo se instala
 ===============
