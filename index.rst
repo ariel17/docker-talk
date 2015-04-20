@@ -12,7 +12,7 @@
 
 .. rst-class:: date
 
-17 de Abril de 2015
+20 de Abril de 2015
 
 Qué es Docker
 =============
