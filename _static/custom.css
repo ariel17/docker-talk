@@ -30,3 +30,28 @@ p.personal-data > a {
     text-decoration: none;
     font-size: 0.7em;
 }
+
+img.architecture {
+    margin-top: 50px;
+}
+
+img.centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inline {
+    display: inline;
+}
+
+img.inline {
+    margin-top: 50px;
+}
+
+p.inline {
+    font-size: 2em;
+    margin-left: 50px;
+    margin-right: 50px;
+    vertical-align: 180%;
+}

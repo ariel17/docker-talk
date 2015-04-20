@@ -40,7 +40,10 @@ Qué es Docker
   aplicación y sus depedencias en un contenedor virtual que puede ejecutarse en
   cualquier servidor Linux."*
 
-.. image:: _static/whatisdocker.jpg
+
+.. rst-class:: centered
+
+   .. image:: _static/whatisdocker.jpg
 
 .. _`451 Research`: https://451research.com/
 
@@ -64,9 +67,18 @@ Por qué Docker
 
 * Menos recursos que una máquina virtual (mucho menos).
 
-.. image:: _static/vm-stack.png
 
-.. image:: _static/docker-stack.png
+.. rst-class:: inline
+
+   .. image:: _static/vm-stack.png
+
+.. rst-class:: inline
+
+   VS
+
+.. rst-class:: inline
+
+   .. image:: _static/docker-stack.png
 
 Por qué Docker
 ==============
@@ -75,44 +87,54 @@ Por qué Docker
 
 .. image:: _static/community.png
 
-Cómo está compuesto
-===================
+Cómo está compuesto: Arquitectura
+=================================
 
-Arquitectura
-------------
+.. rst-class:: architecture
 
-* Motor: un contenedor de virtualización para el ambiente de las aplicaciones.
-* Hub: un servicio para compartir y administrar las imágenes. 
+   .. image:: _static/architecture.svg
 
-Cómo está compuesto
-===================
+Cómo está compuesto: Arquitectura
+=================================
 
-Imágenes
---------
+* **Cliente:** es la interfaz de usuario para la administración de las imágenes
+  y los contenedores.
+* **Demonio:** es gestor de la plataforma de virtualización. Construye las
+  imágenes, crea/destruye los contenedores, comunicación con el índice de
+  imágenes, etc.
+* **Imagen:** Es un template de sólo lectura
+* **Contenedor:** es una instancia de una imágen (análogo a POO) ejecutándose.
+* **Registros:** un servicio en línea para almacenar y compartir las
+  imágenes; pueden ser públicos o privados.
+
+Cómo está compuesto: Tecnología
+===============================
+
+.. image:: _static/interfaces.svg
+
+Cómo está compuesto: Tecnología
+===============================
+
+* **Espacio de nombres:** *Namespaces*. Crea espacios de trabajo aislado entre
+  contenedores.
+* **Grupos de control:** *cgroups*. Herramienta del kernel de Linux para
+  limitar, contabilizar y aislar el uso de recursos.
+* **Formato del contenedor:** Formato de implementación del contenedor.
+
+.. image:: _static/interfaces.svg
+
+.. note:: 
+
+   * Namespaces: cada aspecto del contenedor se ejecuta bajo su propio espacio
+     de nombre y no tiene acceso a recursos por fuera de éste.
+   
+   * Cgroups: Por ejemplo, limitar la cantidad de memoria disponible para un
+     contenedor.
+
+Cómo está compuesto: Imágenes
+=============================
 
 Ejemplo de Dockerfile:
 
-.. code-block:: text
-
-   FROM ubuntu:14.10
-   MAINTAINER Ariel Gerardo Ríos
-   RUN apt-get install htop
-
-   ADD . /code
-   WORKDIR /code
-
-   EXPOSE 80
-
-   RUN echo "Hello world!"
-
-
-
-Cómo se instala
-===============
-
-.. code:: bash
-
-   ~$ sudo apt-get install docker
-
-Cómo lo integro a mi desarrollo?
-================================
+.. include:: examples/Dockerfile
+   :literal:
