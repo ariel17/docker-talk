@@ -1,5 +1,31 @@
+article#docker {
+    text-align: center;
+}
+
 article#docker > h1 {
     display: none;
+}
+
+article#demo > h2 {
+    text-align: center;
+    font-size: 3em;
+    padding-top: 20%;
+}
+
+article#preguntas > h2 {
+    text-align: center;
+    font-size: 3em;
+    padding-top: 10%;
+}
+
+article#muchas-gracias {
+    text-align: center;
+}
+
+article#muchas-gracias > h2 {
+    text-align: center;
+    font-size: 3em;
+    padding-top: 20%;
 }
 
 h2 {
@@ -7,7 +33,7 @@ h2 {
 }
 
 img.docker {
-    height: 70%;
+    height: 80%;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -16,6 +42,11 @@ img.docker {
 img.movile {
     height: 5%;
     padding-bottom: 0;
+}
+
+img.movile-thankyou {
+    height: 10%;
+    padding-top: 10%;
 }
 
 p.date {
@@ -29,4 +60,43 @@ p.personal-data {
 p.personal-data > a {
     text-decoration: none;
     font-size: 0.7em;
+}
+
+img.architecture {
+    margin-top: 50px;
+}
+
+img.centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inline {
+    display: inline;
+}
+
+img.inline {
+    margin-top: 50px;
+}
+
+p.inline {
+    font-size: 2em;
+    margin-left: 50px;
+    margin-right: 50px;
+    vertical-align: 180%;
+}
+
+img.interfaces {
+    width: 70%;
+    margin-top: 40px;
+    margin-left: 10%;
+    margin-right: auto;
+}
+
+img.preguntas {
+    width: 60%;
+    margin-top: 10%;
+    margin-left: 15%;
+    margin-right: auto;
 }

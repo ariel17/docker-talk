@@ -54,9 +54,6 @@
 <img alt="images/docker.png" class="docker" src="images/docker.png" />
 <img alt="images/movile.png" class="movile" src="images/movile.png" />
 <p class="date">17 de Abril de 2015</p>
-<p class="me">Ariel Gerardo Ríos</p>
-<p class="personal-data"><a class="reference external" href="mailto:ariel&#46;rios&#37;&#52;&#48;movile&#46;com">ariel<span>&#46;</span>rios<span>&#64;</span>movile<span>&#46;</span>com</a></p>
-<p class="personal-data"><a class="reference external" href="https://twitter.com/ariel_17_">&#64;ariel_17_</a></p>
 
 
 
@@ -73,7 +70,7 @@ distribuidas.</li>
 aplicación y sus depedencias en un contenedor virtual que puede ejecutarse en
 cualquier servidor Linux.&quot;</em></li>
 </ul>
-<img alt="images/whatisdocker.jpg" src="images/whatisdocker.jpg" />
+<img alt="images/whatisdocker.jpg" class="centered" src="images/whatisdocker.jpg" />
 
 
 
@@ -114,8 +111,9 @@ clonarlos a demanda.</li>
 <ul class="simple">
 <li>Menos recursos que una máquina virtual (mucho menos).</li>
 </ul>
-<img alt="images/vm-stack.png" src="images/vm-stack.png" />
-<img alt="images/docker-stack.png" src="images/docker-stack.png" />
+<img alt="images/vm-stack.png" class="inline" src="images/vm-stack.png" />
+<p class="inline">VS</p>
+<img alt="images/docker-stack.png" class="inline" src="images/docker-stack.png" />
 
 
 
@@ -134,52 +132,90 @@ clonarlos a demanda.</li>
 
 
 </article>
-<article class="slide level-2" id="como-esta-compuesto">
+<article class="slide level-2" id="como-esta-compuesto-arquitectura">
 
-<h2>Cómo está compuesto</h2>
+<h2>Cómo está compuesto: Arquitectura</h2>
 
-
-
-
-
-</article>
-<article class="slide level-3" id="arquitectura">
-
-<h3>Arquitectura</h3>
-
-<ul class="simple">
-<li>Motor: un contenedor de virtualización para el ambiente de las aplicaciones.</li>
-<li>Hub: un servicio para compartir y administrar las imágenes.</li>
-</ul>
-
+<img class="architecture" src="images/architecture.svg" />
 
 
 
 </article>
 <article class="slide level-2" id="id4">
 
-<h2>Cómo está compuesto</h2>
+<h2>Cómo está compuesto: Arquitectura</h2>
 
+<ul class="simple">
+<li><strong>Cliente:</strong> es la interfaz de usuario para la administración de las imágenes
+y los contenedores.</li>
+<li><strong>Demonio:</strong> es gestor de la plataforma de virtualización. Construye las
+imágenes, crea/destruye los contenedores, comunicación con el índice de
+imágenes, etc.</li>
+<li><strong>Imagen:</strong> Es un template de sólo lectura</li>
+<li><strong>Contenedor:</strong> es una instancia de una imágen (análogo a POO) ejecutándose.</li>
+<li><strong>Registros:</strong> un servicio en línea para almacenar y compartir las
+imágenes; pueden ser públicos o privados.</li>
+</ul>
 
 
 
 
 </article>
-<article class="slide level-3" id="imagenes">
+<article class="slide level-2" id="como-esta-compuesto-tecnologia">
 
-<h3>Imágenes</h3>
+<h2>Cómo está compuesto: Tecnología</h2>
+
+<img class="interfaces" src="images/interfaces.svg" />
+
+
+
+</article>
+<article class="slide level-2" id="id5">
+
+<h2>Cómo está compuesto: Tecnología</h2>
+
+<ul class="simple">
+<li><strong>Espacio de nombres:</strong> <em>Namespaces</em>. Crea espacios de trabajo aislado entre
+contenedores.</li>
+<li><strong>Grupos de control:</strong> <em>cgroups</em>. Limita, contabiliza y aisla el uso de
+recursos.</li>
+<li><strong>Formato del contenedor:</strong> Formato de implementación del contenedor
+(libcontainer, LXC).</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>Namespaces: cada aspecto del contenedor se ejecuta bajo su propio espacio
+de nombre y no tiene acceso a recursos por fuera de éste.</li>
+<li>Cgroups: Por ejemplo, limitar la cantidad de memoria disponible para un
+contenedor.</li>
+</ul>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="como-esta-compuesto-imagenes">
+
+<h2>Cómo está compuesto: Imágenes</h2>
 
 <p>Ejemplo de Dockerfile:</p>
-<div class="highlight-text"><div class="highlight"><pre>FROM ubuntu:14.10
+<div class="highlight-python"><div class="highlight"><pre>FROM ubuntu:14.10
 MAINTAINER Ariel Gerardo Ríos
-RUN apt-get install htop
+RUN apt-get update
+RUN apt-get install -y htop
+RUN apt-get install -y nginx
+RUN apt-get install -y cpuburn
 
 ADD . /code
 WORKDIR /code
 
+# ENTRYPOINT [&quot;burnP6&quot;]
 EXPOSE 80
 
 RUN echo &quot;Hello world!&quot;
+RUN service nginx start
 </pre></div>
 </div>
 
@@ -187,11 +223,27 @@ RUN echo &quot;Hello world!&quot;
 
 
 </article>
-<article class="slide level-2" id="como-se-instala">
+<article class="slide level-2" id="docker-en-accion">
 
-<h2>Cómo se instala</h2>
+<h2>Docker en acción</h2>
 
-<div class="code bash highlight-python"><div class="highlight"><pre>~$ sudo apt-get install docker
+<p>Creando una imagen:</p>
+<div class="highlight-bash"><div class="highlight"><pre>~<span class="nv">$ </span>sudo docker build -t ariel17/image_name .
+ Sending build context to Docker daemon 15.36 kB
+ Sending build context to Docker daemon
+ Step <span class="m">0</span> : FROM ubuntu:14.10
+  ---&gt; 59a878f244f6
+ Step <span class="m">1</span> : MAINTAINER Ariel Gerardo Ríos
+  ---&gt; Using cache
+  ---&gt; 9ccedeb1ff03
+ Step <span class="m">2</span> : RUN apt-get update
+  ---&gt; Using cache
+  ---&gt; 4cdb3613c092
+ ...
+ Step <span class="m">8</span> : RUN <span class="nb">echo</span> <span class="s2">&quot;Hello world!&quot;</span>
+  ---&gt; Using cache
+  ---&gt; d8722569a228
+ Successfully built d8722569a228
 </pre></div>
 </div>
 
@@ -199,10 +251,79 @@ RUN echo &quot;Hello world!&quot;
 
 
 </article>
-<article class="slide level-2" id="como-lo-integro-a-mi-desarrollo">
+<article class="slide level-2" id="id6">
 
-<h2>Cómo lo integro a mi desarrollo?</h2>
+<h2>Docker en acción</h2>
 
+<p>Accediendo a una imagen por terminal:</p>
+<div class="highlight-bash"><div class="highlight"><pre>~<span class="nv">$ </span>sudo docker run -ti --rm ariel17/image_name /bin/bash
+root@98bf7687450d:/code#
+</pre></div>
+</div>
+<p>Ejecutando una imagen como demonio:</p>
+<div class="highlight-bash"><div class="highlight"><pre>~<span class="nv">$ </span>sudo docker run -d -p 9999:80 ariel17/image_name
+ a8f634e7882b8b1e7a8d9068018066f98d16ef8a55a303f0995b58e97ce6c768
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="demo">
+
+<h2>¡Demo! :)</h2>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>Build: sudo docker build -t ariel17/docker-talk .</li>
+<li>Run tty: sudo docker run -ti --rm ariel17/docker-talk /bin/bash</li>
+<li>Agregar ENTRYPOINT burnP6; htop + sudo docker run -ti --rm --cpuset=0 ariel17/docker-talk</li>
+<li>Run background: sudo docker run -d -p 9999:80 --rm ariel17/docker-talk</li>
+<li>Run 1 cpu: sudo docker run -d -p 9999:80 --rm ariel17/docker-talk</li>
+</ul>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="preguntas">
+
+<h2>¿Preguntas?</h2>
+
+<img alt="images/preguntas.gif" class="preguntas" src="images/preguntas.gif" />
+
+
+
+
+</article>
+<article class="slide level-2" id="donde-continuar">
+
+<h2>Dónde continuar</h2>
+
+<ul class="simple">
+<li><strong>Blog</strong>: <a class="reference external" href="https://blog.docker.com/">https://blog.docker.com/</a></li>
+<li><strong>Try it!:</strong> <a class="reference external" href="https://www.docker.com/tryit/">https://www.docker.com/tryit/</a></li>
+<li><strong>Official documentation:</strong> <a class="reference external" href="https://docs.docker.com/">https://docs.docker.com/</a></li>
+<li><strong>Ansible &amp; Docker:</strong> <a class="reference external" href="http://www.ansible.com/docker">http://www.ansible.com/docker</a></li>
+<li><strong>GitHub repository:</strong> <a class="reference external" href="https://github.com/docker/docker">https://github.com/docker/docker</a></li>
+<li><strong>#Docker:</strong> canal IRC de charlas en <a class="reference external" href="https://freenode.net/">https://freenode.net/</a></li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="muchas-gracias">
+
+<h2>¡Muchas gracias!</h2>
+
+<img alt="images/movile.png" class="movile-thankyou" src="images/movile.png" />
+<p class="me">Ariel Gerardo Ríos</p>
+<p class="personal-data"><a class="reference external" href="mailto:ariel&#46;rios&#37;&#52;&#48;movile&#46;com">ariel<span>&#46;</span>rios<span>&#64;</span>movile<span>&#46;</span>com</a></p>
+<p class="personal-data"><a class="reference external" href="https://twitter.com/ariel_17_">&#64;ariel_17_</a></p>
 
 
 
